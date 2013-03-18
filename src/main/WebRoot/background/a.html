@@ -1,0 +1,170 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>后台管理</title>
+
+<link type="text/css" rel="stylesheet" href="./background/css/base.css">
+<link type="text/css" rel="stylesheet" href="./background/css/layout.css">
+
+<script src="./js/jquery-1.4.2.min.js"></script>
+ 
+</head>
+
+<body>
+<div class="zhong ml5">
+
+	<div class="dqnav">
+    	<p class="ml15 pl20">当前位置：<a href="#">商家管理</a> &gt; <a href="#">商家列表</a></p>
+    </div>
+    
+    
+<div class="cxtab mt18 ml18 mr10">
+    <div class="ss clearer">
+      <p class="left"><img src="./background/images/jiao01.jpg"></p>
+      <p class="right"><img src="./background/images/jiao02.jpg"></p>
+    </div>
+    <div class="zss">
+      <div class="zss01a">
+        <div class="zss01b pb15">
+        <form action="/guest/guestController.do?method=queryGuest" method="post" id="guestForm" name="guestForm">
+          <div class="zss02 pt8 pl8 pr8">
+            <div class="ss2 clearer sbg">
+              <p class="left"><img src="./background/images/zi_01.jpg"></p>
+              <p class="right"><img src="./background/images/zi_02.jpg"></p>
+            </div>
+            <div class="zss02b">
+              <div class="zs01">
+                <div class="zs02 pb10">
+                  <div class="stab_tuijian ml18 pt15">
+                                    	<dl class="left pb6 font12px">
+                                        	<dt class="left bold mr6">商家编号：</dt>
+                                            <dd class="left">
+												<input type="text" name="guestIds" id="guestIds">
+											</dd>
+                                        </dl>
+                                        <dl class="left pb6 font12px">
+                                        	<dt class="left bold mr6">商家序号：</dt>
+                                            <dd class="left">
+												<input type="text" value="" name="guestNo" id="guestNo">
+											</dd>
+                                        </dl>
+                                    	<dl class="left pb6 font12px">
+                                        	<dt class="left bold mr6">商家名称：</dt>
+                                            <dd class="left">
+												<input type="text" value="" name="guestCnName" id="guestCnName">
+											</dd>
+                                        </dl>
+                                        <dl class="left pb6 font12px">
+                                        	<dt class="left bold mr6">品牌名称：</dt>
+                                            <dd class="left"><input type="text" value="" size="20" name="brandName" id="brandName"></dd>
+                                        </dl>
+                                    	<dl class="left pb6 font12px">
+                                        	<dt class="left bold mr6">地址：</dt>
+                                            <dd class="left">
+                                            	<input type="text" value="" size="20" name="guestAddress" id="guestAddress">
+                                            	<input type="hidden" id="cpage" value="0" name="cpage">
+                                            </dd>
+                                        </dl>
+                                        <dl class="left pb6 font12px">
+                                        	<dt class="left bold mr6">城市：</dt>
+                                            <dd style="width:170px" class="left">
+                                            	<select id="guestProvinceId" name="guestProvinceId">
+															
+																		<option value="-1">请选择</option>
+																		
+																			<option value="1">
+																				北京
+																			</option>
+																			<option value="2">
+																				上海
+																			</option>
+																		
+															
+												</select>
+												<select id="guestCityId" name="guestCityId">
+															<option value="-1">请选择</option>
+															
+												</select>
+                                            </dd>
+                                        </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ss3 clearer sbg">
+              <p class="left"><img src="./background/images/zi_03.jpg"></p>
+              <p class="right"><img src="./background/images/zi_04.jpg"></p>
+            </div>
+          </div>
+          <div class="as03">
+                    	<a onclick="sub()" href="#"><img src="./background/images/cx-anniu02.jpg"></a>
+		  </div>
+          </form>
+          
+          <div class="zs03 pt20 pr13">
+           
+            <div class="zs03b">
+              <table width="100%" cellspacing="0" cellpadding="0" border="0" style=" border-left:1px solid #d9d9d9; border-top:1px solid #d9d9d9;">
+                <tbody><tr height="30" bgcolor="#f2f2f2" align="center" class="yx">
+                  <td class="yx">商家编号</td>
+                  <td class="yx">商家序号</td>
+                  <td class="yx">商家名称</td>
+                  <td class="yx">品牌名称</td>
+                  <td class="yx">地址</td>
+                  <td class="yx">操作</td>
+                </tr>
+                
+                
+                	<tr height="35" bgcolor="#FFFFFF" align="center">
+	                  <td class="yx2"><a class="link_1" href="/guest/guestController.do?method=queryByIdGuest&amp;guestId=51518091&amp;flag=show">51518091</a></td>
+	                  <td class="yx2">1065254</td>
+	                  <td class="yx2"><a class="link_1" href="/guest/guestController.do?method=queryByIdGuest&amp;guestId=51518091&amp;flag=show">科技有限公司</a></td>
+	                  <td class="yx2"><a class="link_1" href="/brand/brandController.do?method=queryByIdBrand&amp;brandId=100018471&amp;flag=show">百度网</a>
+				    	<input type="hidden" value="100018471" name="brandId" id="brandId">
+				      </td>
+	                  <td class="yx2">建外soho9号</td>
+	                  <td class="yx2 lineheight180">
+				      	<a href="/guest/guestController.do?method=updateByIdGuest&amp;guestId=51518091">编辑</a>&nbsp; 
+					      
+	      				
+					</td>
+	              </tr>
+                
+                	<tr height="35" bgcolor="#FFFFFF" align="center">
+	                  <td class="yx2"><a class="link_1" href="/guest/guestController.do?method=queryByIdGuest&amp;guestId=92897155&amp;flag=show">92897155</a></td>
+	                  <td class="yx2">1064961</td>
+	                  <td class="yx2"><a class="link_1" href="/guest/guestController.do?method=queryByIdGuest&amp;guestId=92897155&amp;flag=show">文化传播有限公司</a></td>
+	                  <td class="yx2"><a class="link_1" href="/brand/brandController.do?method=queryByIdBrand&amp;brandId=100018470&amp;flag=show">票务</a>
+				    	<input type="hidden" value="100018470" name="brandId" id="brandId">
+				      </td>
+	                  <td class="yx2">1301室</td>
+	                  <td class="yx2 lineheight180">
+				      	<a href="/guest/guestController.do?method=updateByIdGuest&amp;guestId=92897155">编辑</a>&nbsp; 
+					      <a href="/branch/branchController.do?method=queryLandMarks&amp;guestId=92897155&amp;brandId=100018470">增加分店信息</a><br>
+					    
+	      				
+					</td>
+	              </tr>
+                
+                
+              </tbody></table>
+              
+            </div>
+            
+            <div class="zs03a pt10">
+              <div class="product_list_page">
+					<div class="product_list_page"><span class="disabled">共52190条</span><span class="disabled">首页</span><span class="current"> 1 </span><a href="javascript:gopage(2);"> 2 </a><a href="javascript:gopage(3);"> 3 </a><a href="javascript:gopage(4);"> 4 </a><a href="javascript:gopage(2);">下一页</a><a href="javascript:gopage(5219);">末页</a></div>
+			  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ss4 clearer">
+      <p class="left"><img src="./background/images/jiao03.jpg"></p>
+      <p class="right"><img src="./background/images/jiao04.jpg"></p>
+    </div>
+  </div>    
+</div>
+
+</body></html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RoleMapper" >
+
+        <resultMap id="RoleResult" type="Role">
+            <result property="roleId" column="ROLE_ID" />
+            <result property="roleName" column="ROLE_NAME"/>
+            <result property="status" column="STATUS" />
+            <result property="createTime" column="CREATE_TIME"/>
+            <result property="updateTime" column="UPDATE_TIME"/>
+            <!--
+            	<result property="functionList" column="ROLE_ID" select="getFunctionListByRoleId"/>
+            -->
+           
+            <result property="roleTypeId" column="ROLE_TYPE_ID"/>
+            <result property="roleApplyScopeId" column="ROLE_APPLY_SCOPE_ID" />
+            <!--
+            <association property="functionList" column="ROLE_ID" javaType="INTEGER" select="FunctionMapper.getFunctionListByRoleId" />
+	        -->
+        </resultMap>
+
+        <sql id="SYS_ROLE_TBL_columns">
+            SYS_ROLE_TBL.ROLE_ID,
+            SYS_ROLE_TBL.ROLE_NAME,
+            SYS_ROLE_TBL.STATUS,
+            SYS_ROLE_TBL.CREATE_TIME,
+            SYS_ROLE_TBL.UPDATE_TIME,
+            SYS_ROLE_TBL.ROLE_TYPE_ID,
+            SYS_ROLE_TBL.ROLE_APPLY_SCOPE_ID
+        </sql>
+
+        <sql id="SYS_ROLE_TBL_properties">
+            #{roleId},
+            #{roleName},
+            #{status},
+            #{createTime},
+            #{updateTime},
+            #{roleTypeId},
+            #{roleApplyScopeId}
+        </sql>
+
+        <insert id="createRole" parameterType="Role" useGeneratedKeys="true" keyColumn="role_id" keyProperty="roleId">
+            INSERT INTO SYS_ROLE_TBL (<include refid="SYS_ROLE_TBL_columns"/>)
+            VALUES
+            (<include refid="SYS_ROLE_TBL_properties"/>)
+        </insert>
+
+        <delete id="deleteRoleById" parameterType="int">
+            DELETE FROM SYS_ROLE_TBL
+            WHERE
+                ROLE_ID = #{value}
+        </delete>
+
+        <update id="updateRole" parameterType="Role">
+            UPDATE SYS_ROLE_TBL SET
+                ROLE_ID = #{roleId},
+                ROLE_NAME = #{roleName},
+                STATUS = #{status},
+                CREATE_TIME = #{createTime},
+                UPDATE_TIME = #{updateTime},
+                ROLE_APPLY_SCOPE_ID = #{roleApplyScopeId}
+            WHERE
+                ROLE_ID = #{roleId}
+        </update>
+
+        <select id="getRoleById" resultMap="RoleResult" parameterType="int">
+            SELECT
+            <include refid="SYS_ROLE_TBL_columns"/>
+            FROM SYS_ROLE_TBL
+            WHERE
+                ROLE_ID = #{value}
+        </select>
+
+        <select id="getRoleList" resultMap="RoleResult" >
+            SELECT
+            <include refid="SYS_ROLE_TBL_columns"/>
+            FROM SYS_ROLE_TBL
+            
+        </select>
+        
+        <select id="getRoleListByUserId" resultMap="RoleResult" parameterType="int">
+            SELECT
+            distinct
+            <include refid="SYS_ROLE_TBL_columns"/>
+            FROM SYS_ROLE_TBL,SYS_USER_TBL,SYS_USER_ROLE_TBL
+            WHERE SYS_ROLE_TBL.ROLE_ID = SYS_USER_ROLE_TBL.ROLE_ID
+               AND SYS_USER_TBL.USER_ID = SYS_USER_ROLE_TBL.USER_ID
+               AND SYS_USER_TBL.USER_ID = #{value}
+        </select>
+        
+        <select id="getRoleListByCondition" resultMap="RoleResult" parameterType="QueryRoleCondition">
+            SELECT
+            <include refid="SYS_ROLE_TBL_columns"/>
+              FROM SYS_ROLE_TBL
+            <where>
+	            
+	            <if test="roleId!=null and roleId!=0">
+	            	ROLE_ID = #{roleId}
+	            </if>
+	            
+	            <if test="roleApplyScopeId!=null">
+	            	AND ROLE_APPLY_SCOPE_ID = #{roleApplyScopeId}
+	            </if>
+                
+            </where>
+          
+            
+        </select>
+        
+        <!--end-->
+</mapper>

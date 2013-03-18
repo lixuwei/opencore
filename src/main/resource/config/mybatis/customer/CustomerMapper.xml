@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomerMapper" >
+
+
+	<resultMap type="com.fairyhawk.entity.customer.Customer" id="customerMap">
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 
+     * ①单条增加 返回主键(可以不返回) ② 批量增加 返回响应行数(可以不返回) ③ 删除 返回响应行数(可以不返回) ④修改
+     * 返回响应行数(可以不返回) ⑤查询单个实体 ⑥查询实体List ⑦ 查询返回List<Map<String,Object>>
+     */
+ 	-->
+ 	<!-- 将主键id的值设置到customer的cusId字段中  -->
+ 	<insert id="addOneUser"  parameterType="customer" useGeneratedKeys="true" keyProperty="cusId" keyColumn="id" >
+ 		INSERT INTO fairy_customer( email, NAME)VALUES (#{email},#{name})
+ 	 </insert>
+ 	 
+ 	 <!-- 批量插入 用循环生成 -->
+ 	<insert id="addBatchUser"  parameterType="list" >
+ 		INSERT INTO fairy_customer( email, NAME)VALUES 
+ 		<foreach collection="list" item="item" separator=",">
+ 			(#{item.email},#{item.name})
+ 		 </foreach>
+ 	 </insert>
+ 	
+ 	
+ 	<update id="updateUser" parameterType="customer" >
+ 		update fairy_customer set email=#{email},name=#{name} where id=#{id,jdbcType=INTEGER}
+ 	</update>
+ 	
+ 	<delete id="deleteUserById" parameterType="long">
+ 		delete from fairy_customer where id=#{id,jdbcType=INTEGER}
+ 	</delete>
+ 	
+ 	<delete id="deleteUser" parameterType="map">
+ 		delete from fairy_customer 
+ 		<where>
+ 			<if test="minId!=null">
+ 			<![CDATA[id>=#{minId,jdbcType=INTEGER}]]>
+ 			</if>
+ 			<if test="maxId!=null">
+ 			and <![CDATA[id<=#{maxId,jdbcType=INTEGER}]]>
+ 			</if>
+ 		 
+ 		</where>
+ 		
+ 	</delete>
+ 	
+ 	<select id="queryUserById" parameterType="customer" resultType="customer">
+ 		select email,name from fairy_customer where id=#{id,jdbcType=INTEGER}
+ 	</select>
+ 	
+ 	<!-- 查询返回list时，resultType是对应的类不是list -->
+ 	<select id="queryUserByCondition" parameterType="map" resultType="customer">
+ 			select id,email,name from fairy_customer 
+ 			<where><!-- 用where标签。自动回去掉第一个and或者or 不会出现 wheer and/or-->
+ 			
+ 				<if test="ids !=null">
+	 				id in<!-- 数组循环时#{item}就代表值，如果是Map<String,Object> 用 #{item.key}取值 -->
+	 				<foreach collection="ids" item="item" open="(" close=")" separator=",">
+	 				#{item,jdbcType=INTEGER}
+	 				</foreach>
+ 				</if>
+ 				
+ 				<if test="email !=null">
+ 					or email=#{email}
+ 				</if>
+ 				
+ 				<if test="name !=null">
+ 					or name=#{name}
+ 				</if>
+ 				
+ 			</where>
+ 	
+ 	</select>
+ 	
+ 	
+ 	<!-- 查询返回list<Map<String<Object>>时，resultType是map不是list -->
+ 	<select id="queryUserMapsByCondition" parameterType="map" resultType="map">
+ 			select id,email,name from fairy_customer 
+ 			<where><!-- 用where标签。自动回去掉第一个and或者or 不会出现 wheer and/or-->
+ 			
+ 				<if test="ids !=null">
+	 				id in<!-- 数组循环时#{item}就代表值，如果是Map<String,Object> 用 #{item.key}取值 -->
+	 				<foreach collection="ids" item="item" open="(" close=")" separator=",">
+	 				#{item,jdbcType=INTEGER}
+	 				</foreach>
+ 				</if>
+ 				
+ 				<if test="email !=null">
+ 					or email=#{email}
+ 				</if>
+ 				
+ 				<if test="name !=null">
+ 					or name=#{name}
+ 				</if>
+ 				
+ 			</where>
+ 	
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+	<!-- 分页demo Sql 开始-->
+	<select id="getCustest" parameterType="java.util.HashMap"
+		resultMap="customerMap">
+		select * from beiker_user
+		order by user_id desc
+		<include refid="publicMapper.pageEnd" />
+	</select>
+	<select id="getCustestCount" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select count(1) from beiker_user 
+    </select>
+	<!-- 分页demo Sql 结束-->
+
+
+	<select id="getCustomerListJson" parameterType="java.util.HashMap"
+		resultMap="customerMap">
+		select * from beiker_user where
+     	<![CDATA[  user_id <#{cusId,jdbcType=INTEGER}  ]]>
+		order by user_id desc
+	</select>
+
+	<select id="checkEmail" parameterType="customer"
+		resultType="java.lang.Integer">
+		select count(1) from beiker_user where
+		email= #{email}
+    </select>
+
+	<update id="updateCustomer" parameterType="com.fairyhawk.entity.customer.Customer">
+		update beiker_user set mobile=100 where user_id=100
+    </update>
+
+	<!-- 查询返回list<Map<String,Object>>-->
+	<select id="getCustestList" resultType="java.util.HashMap">
+		select * from beiker_user  <![CDATA[ where user_id <1000   ]]>
+		order by user_id desc
+	</select>
+
+
+
+
+</mapper>

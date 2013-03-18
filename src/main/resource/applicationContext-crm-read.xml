@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<!-- 动态数据源的父类,其中配置的参数为子数据库的default值 -->
+	<bean id="parentDataSource_crm_online_read" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" abstract="true">
+		<property name="driverClass">
+			<value>${jdbc.crm.read.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.crm.read.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.crm.read.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.crm.read.password}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${jdbc.crm.read.maxPoolSize}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${jdbc.crm.read.minPoolSize}</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>${jdbc.crm.read.initialPoolSize}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>${jdbc.crm.read.idleConnectionTestPeriod}
+			</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>${jdbc.crm.read.maxIdleTime}</value>
+		</property>
+	</bean>
+
+	<!-- 子数据源,写操作主库,无需修改配置参数 -->
+	<bean id="write_crm_online_read" parent="parentDataSource_crm_online_read"></bean>
+
+	<!-- 子数据源,只读数据源热read02,只需对url,user,password重新赋值 -->
+	<bean id="read02_crm_online_read" destroy-method="close"
+		parent="parentDataSource_crm_online_read">
+		<property name="jdbcUrl">
+			<value>${jdbc.crm.read.read.db02.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.crm.read.read.db02.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.crm.read.read.db02.password}</value>
+		</property>
+	</bean>
+
+	<!-- 子数据源,只读数据源热read03,只需对url,user,password重新赋值 -->
+	<bean id="read03_crm_online_read" destroy-method="close"
+		parent="parentDataSource_crm_online_read">
+		<property name="jdbcUrl">
+			<value>${jdbc.crm.read.read.db03.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.crm.read.read.db03.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.crm.read.read.db03.password}</value>
+		</property>
+	</bean>
+
+	<!-- 子数据源,只读数据源热read04,只需对url,user,password重新赋值 -->
+	<bean id="read04_crm_online_read" destroy-method="close"
+		parent="parentDataSource_crm_online_read">
+		<property name="jdbcUrl">
+			<value>${jdbc.crm.read.read.db04.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.crm.read.read.db04.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.crm.read.read.db04.password}</value>
+		</property>
+	</bean>
+
+	<!-- 动态数据源 -->
+	<bean id="dataSourceCrmOnlineRead" class="com.fairyhawk.common.db.DataSourceRouter">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="write" value-ref="write_crm_online_read" />
+				<entry key="read02" value-ref="read02_crm_online_read" />
+				<entry key="read03" value-ref="read03_crm_online_read" />
+				<entry key="read04" value-ref="read04_crm_online_read" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="write" />
+		<property name="dataSourceKey">
+			<ref local="dataSourceKeyCrmOnlineRead" />
+		</property>
+	</bean>
+
+	<!-- 读写管理 -->
+	<bean id="dataSourceKeyCrmOnlineRead" class="com.fairyhawk.common.db.DataSourceKeyImpl">
+		<property name="readDateSourceMap">
+			<map key-type="java.lang.String">
+				<entry key="read02" value="read02" />
+				<entry key="read03" value="read03" />
+				<entry key="read04" value="read04" />
+			</map>
+		</property>
+		<property name="writeKey">
+			<value>write</value>
+		</property>
+	</bean>
+	<!-- 事务配置 -->
+	<bean id="transactionManager_crm_online_read"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceCrmOnlineRead"></property>
+	</bean>
+
+	<!-- 事务管理拦截器 -->
+	<bean id="transactionInterceptor_crm_read_online"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager_crm_online_read" />
+		<property name="transactionAttributes">
+			<props>
+				<!-- 读操作 -->
+				<prop key="query*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="find*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="get*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="load*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="count*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="list*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="check*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="query*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="qry*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<!-- 写操作 -->
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+				
+				<prop key="*">PROPAGATION_SUPPORTS,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

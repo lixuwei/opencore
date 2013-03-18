@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" http-equiv="Content-Type"/>
+<title>268在线教育平台 - 中国在线教育平台第一品牌</title>
+<meta http-equiv="X-UA-Compatible" content="IE=9, IE=8"> 
+<meta name="application-name" content=""> 
+<meta name="description" content=""> 
+<meta name="application-url" content=""> 
+<link rel="icon" href="images/268_icon.png" sizes="30x30"> 
+<link rel="shortcut icon" href="images/268_icon.ico" type="image/x-icon"> 
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+<!--[if IE]><script src="js/html5.js"></script><![endif]-->
+<!--[if lt IE 7]>
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">
+ ie_png.fix('.png');
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+
+	function addApply(){
+	
+	var hangYe=	$("#hangYe").find("option:selected").val(); 
+	if(hangYe==""){
+		alert("请选择行业!");
+		$("#hangYe").focus();
+		return;
+	}
+	var diQu=	$("#diQu").find("option:selected").val();
+	if(diQu==""){
+		alert("请选择地区!");
+		$("#diQu").focus();
+		return;
+	}
+	var userName=	$("#userName").val() ;
+	if(userName=="" || userName=="请输入"){
+		alert("请输入姓名!");
+		$("#userName").focus();
+		return;
+	}
+	var mobile=	$("#mobile").val() ;
+	if(mobile=="" || mobile=="请输入"){
+		alert("请输入手机号!");
+		$("#mobile").focus();
+		return;
+	}
+	/*
+	 var pattern = /^1{1}[0-9]{10}$/;
+	if(!pattern.test(mobile)){
+		alert("请输入正确的手机号!");
+		return;
+	}*/
+	
+	var email=	$("#email").val() ;
+	var patternep=/^[_a-zA-Z\d\-\.]+@[_a-zA-Z\d\-]+(\.[_a-zA-Z\d\-]+)+$/;
+	if(email=="" || email=="请输入"){
+		alert("请输入邮箱!");
+		$("#email").focus();
+		return;
+	}
+	if(!patternep.test(email)){
+		alert("请输入正确的邮箱!");
+		$("#email").focus();
+		return;
+	}
+	
+		$.ajax({
+				url : "http://127.0.0.1/opens_admin/customer/apply!addApplyInfo.action",
+				data : {
+					"user.hangYe":hangYe,
+					"user.diQu":diQu,
+					"user.userName":userName,
+					"user.mobile":mobile,
+					"user.email":email
+				},
+				type : "post",
+				dataType : "json",
+				cache : false,
+				async : false,
+				success : function(result) {
+					alert("感谢您!提交成功!");
+				},
+				error : function(error) {
+					alert("感谢您!提交成功!");
+				}
+			});
+	
+	
+	}
+</script>
+
+
+
+</head>
+<body>
+	<section class="wrap">
+		<header class="header">
+			<span class="logo fl"><a href="index.html" title="268在线教育平台 - 中国在线教育平台第一品牌">268在线教育平台</a></span>
+			<em class="slogan fl">中国在线教育平台第一品牌</em>
+			<span class="tel fr"><strong>13264555550</strong></span>
+		</header>
+		<!-- header end -->
+		<nav class="nav">
+			<ul>
+				<li><a href="index.html" title="首  页">首  页</a></li>
+				<li><a href="business-fw.html">商业服务</a></li>
+				<li><a href="center-fw.html">服务中心</a></li>
+				<li><a href="business-al.html">商业案例</a></li>
+				<li><a href="about.html" title="关于我们">关于我们</a></li>
+			</ul>
+		</nav>
+		<!-- nav end -->
+		<section>
+			<article class="slide">
+				<aside class="aside-wrap">
+					<h1 class="title01" title="268在线教育平台">268在线教育平台</h1>
+					<section class="apple-wrap">
+						<div class="apple-bg">
+							<div class="pdlr8">
+								<p class="line-gray"></p>
+								<h3 class="txt">268在线网校平台是一款符合远程教育市场需求的系统。为大中小型教育机构、企业、单位量身打造！</h3>
+								<p class="line-gray"></p>
+									<form  name="applyForm" method="post" enctype="multipart/form-data" action="">
+									<dl id="apple-list">
+										<dt>&nbsp;</dt>
+										<dd>
+											<span class="a-name">行  业</span>
+											<select name="user.hangYe" id="hangYe">
+												<option value="" selected="selected">请选择</option>
+												<option  value="职业培训">职业培训</option>
+												<option  value="中小学">中小学</option>
+											</select>
+										</dd>
+										<dd>
+											<span class="a-name">所在地区</span>
+											<select name="user.diQu" id="diQu">
+												<option value="" selected="selected">请选择</option>
+												<option  value="北京">北京</option>
+												<option  value="上海">上海</option>
+											</select>
+										</dd>
+										<dd>
+											<span class="a-name">申 请 人</span>
+											<input name="user.userName" id="userName" value="请输入" onfocus="if(this.value=='请输入')this.value='';" onblur="if(this.value=='')this.value='请输入';" type="text">
+										</dd>
+										<dd>
+											<span class="a-name">手 机 号</span>
+											<input name="user.mobile" id="mobile"  value="请输入" onfocus="if(this.value=='请输入')this.value='';" onblur="if(this.value=='')this.value='请输入';" type="text">
+										</dd>
+										<dd>
+											<span class="a-name">邮  箱</span>
+											<input name="user.email" id="email"  value="请输入" onfocus="if(this.value=='请输入')this.value='';" onblur="if(this.value=='')this.value='请输入';" type="text">
+										</dd>
+										<dd><span class="a-name">&nbsp;</span><input value="提交" id="sub-btn" class="suBtn" type="button" onclick="addApply(document.applyForm)"></dd>
+									</dl>
+								</form>
+							</div>
+						</div>
+					</section>
+				</aside>
+			</article>
+			<!-- slide end -->
+			<div class="main-bottom clearfix">
+				<ul class="img-wrap">
+					<li><img src="images/td-01.png" width="286" height="124" alt="注重用户体验" class="dis png" /></li>
+					<li><img src="images/td-02.png" width="286" height="124" alt="系统成熟，稳定" class="dis png" /></li>
+					<li><img src="images/td-03.png" width="286" height="124" alt="个性化，可定制" class="dis png" /></li>
+				</ul>
+				<section  style="overflow: hidden;padding: 0 15px 2em;" class="clearfix">
+					<article class="fr four-list">
+						<h3 class="list-title">
+							<p>
+								<span>268介绍</span>
+								<span>注册下载</span>
+								<span>服务中心</span>
+								<span>关于我们</span>
+							</p>
+						</h3>
+						<table cellspacing="0" cellpadding="0" border="0" width="95%">
+						<tr>
+							<td width="25%" valign="top">
+								<ol>
+									<li><a href="business-fw.html">268介绍</a></li>
+									<li><a href="business-fw.html">268标准版</a></li>
+									<li><a href="business-fw.html">268金牌版</a></li>
+									<li><a href="business-fw.html">268钻石版</a></li>
+									<li><a href="business-fw.html">268至尊定制版</a></li>
+									<li><a href="business-fw.html">268增值服务</a></li>
+								</ol>
+							</td>
+							<td width="25%" valign="top">
+								<ol>
+									<li>申请268帐号</li>
+									<li>268产品说明</li>
+									<li>268使用说明</li>
+								</ol>
+							</td>
+							<td width="25%" valign="top">
+								<ol>
+									<li>常见问题</li>
+									<li>紧急联系电话</li>
+									<li>参加使用培训</li>
+								</ol>
+							</td>
+							<td width="25%" valign="top">
+								<ol>
+									<li>公司简介</li>
+									<li>公司资质</li>
+									<li>公司新闻</li>
+									<li>联系方式</li>
+								</ol>
+							</td>
+						</tr>
+						</table>
+					</article>
+					<aside class="fl news">
+						<h2 class="news-title"><span>268最新动态</span></h2>
+						<ol>
+							<li>里程碑：2010年3月268工作室正式成立.</li>
+							<li>里程碑：2010年12月268在线教育平台上线.</li>
+							<li>2011年5月平台第二版本上线.</li>
+							<li>2011年6月参加中国2011年在线教育峰会.</li>
+							<li>里程碑：2012年超过10家教育机构建立长期合作.</li>
+							<li>2013年2月启动第三版268在线教育平台研发.</li>
+						</ol>
+					</aside>
+				</section>
+			</div>
+		</section>
+		<!-- main end -->
+		<footer class="footer">
+			<p class="web-mark"></p>
+			<ol>
+				<li>268教育(北京)有限责任公司  版权所有      <!-- 京ICP备05002321号 --></li>
+<!-- 				<li>北京市海淀区人民大学XX教育网部</li> -->
+				<li>Service Hotline：13264555550    13161666663</li>
+			</ol>
+		</footer>
+		<!-- footer end -->
+	</section>
+</body>
+</html>

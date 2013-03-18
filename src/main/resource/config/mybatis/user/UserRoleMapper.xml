@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserRoleMapper" >
+	
+	<resultMap id="UserRoleResult"
+		type="UserRole">
+		<result property="roleId" column="ROLE_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="gradeId" column="GRADE_ID" />
+		<result property="subjectId" column="SUBJECT_ID" />
+		<result property="limitScopeId" column="LIMIT_SCOPE_ID" />
+		<result property="status" column="STATUS" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+
+	<sql id="SYS_USER_ROLE_TBL_columns">
+		SYS_USER_ROLE_TBL.ROLE_ID,
+		SYS_USER_ROLE_TBL.USER_ID,
+		SYS_USER_ROLE_TBL.GRADE_ID,
+		SYS_USER_ROLE_TBL.SUBJECT_ID,
+		SYS_USER_ROLE_TBL.LIMIT_SCOPE_ID,
+		SYS_USER_ROLE_TBL.STATUS,
+		SYS_USER_ROLE_TBL.CREATE_TIME,
+		SYS_USER_ROLE_TBL.UPDATE_TIME
+	</sql>
+
+	<sql id="SYS_USER_ROLE_TBL_properties">
+		#{roleId}, #{userId}, #{gradeId}, #{subjectId}, #{limitScopeId},
+		#{status}, #{createTime}, #{updateTime}
+	</sql>
+
+	<insert id="createUserRole"
+		parameterType="UserRole">
+		INSERT INTO SYS_USER_ROLE_TBL (
+		<include
+			refid="SYS_USER_ROLE_TBL_columns" />
+		) VALUES (
+		<include
+			refid="SYS_USER_ROLE_TBL_properties" />
+		)
+	</insert>
+
+	<delete id="deleteUserRoleByUserId"
+		parameterType="java.util.Map">
+		DELETE FROM SYS_USER_ROLE_TBL WHERE ROLE_ID =
+		#{roleId} AND USER_ID = #{userId}
+	</delete>
+
+	<delete id="deleteUserRoleByRole"
+		parameterType="int">
+		DELETE FROM SYS_USER_ROLE_TBL WHERE ROLE_ID = #{value}
+	</delete>
+	
+	<delete id="deleteUserRoleByuserIdRoleId"
+		parameterType="map">
+		DELETE FROM SYS_USER_ROLE_TBL WHERE user_id = #{userId} and  ROLE_ID = #{roleId}
+	</delete>
+
+	<update id="updateUserRole"
+		parameterType="UserRole">
+		UPDATE SYS_USER_ROLE_TBL SET ROLE_ID = #{roleId#,
+		USER_ID = #{userId}, GRADE_ID = #{gradeId}, SUBJECT_ID =
+		#{subjectId}, LIMIT_SCOPE_ID = #{limitScopeId#, STATUS = #{status},
+		CREATE_TIME = #{createTime}, UPDATE_TIME = #{updateTime} WHERE
+		ROLE_ID = #{roleId} AND USER_ID = #{userId} AND GRADE_ID =
+		#{gradeId} AND SUBJECT_ID = #{subjectId}
+
+	</update>
+
+	<select id="getUserRoleById"	resultMap="UserRoleResult"		parameterType="java.util.Map">
+		SELECT
+		<include
+			refid="SYS_USER_ROLE_TBL_columns" />
+		FROM SYS_USER_ROLE_TBL WHERE ROLE_ID = #{roleId}
+		AND USER_ID = #{userId} AND GRADE_ID = #{gradeId} AND SUBJECT_ID =
+		#{subjectId}
+
+
+	</select>
+
+	<select id="getUserRoleByUserIdRoleId"	resultMap="UserRoleResult"	parameterType="java.util.Map">
+		SELECT
+		<include
+			refid="SYS_USER_ROLE_TBL_columns" />
+		FROM SYS_USER_ROLE_TBL WHERE ROLE_ID = #{roleId}
+		AND USER_ID = #{userId}
+
+	</select>
+
+	<select id="getUserRoleList"
+		resultMap="UserRoleResult"
+		parameterType="UserRole">
+		SELECT
+		<include
+			refid="SYS_USER_ROLE_TBL_columns" />
+		FROM SYS_USER_ROLE_TBL
+	</select>
+
+	<select id="getUGSRByUserId"
+		resultMap="UserRoleResult"
+		parameterType="int">
+		SELECT
+		<include
+			refid="SYS_USER_ROLE_TBL_columns" />
+		FROM SYS_USER_ROLE_TBL WHERE USER_ID = #{userId}
+	</select>
+	
+</mapper>

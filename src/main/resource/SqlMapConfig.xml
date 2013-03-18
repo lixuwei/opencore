@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 
+	<settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="cacheEnabled" value="false"/>
+        	<!--<setting name="cacheEnabled" value="true"/>
+		  <setting name="lazyLoadingEnabled" value="true"/>
+		  <setting name="multipleResultSetsEnabled" value="true"/>
+		  <setting name="useColumnLabel" value="true"/>
+		  <setting name="useGeneratedKeys" value="false"/>
+		  <setting name="autoMappingBehavior" value="PARTIAL"/>
+		  <setting name="defaultExecutorType" value="SIMPLE"/>
+		  <setting name="defaultStatementTimeout" value="25"/>
+		  <setting name="safeRowBoundsEnabled" value="false"/>
+		  <setting name="mapUnderscoreToCamelCase" value="false"/>
+		  <setting name="localCacheScope" value="SESSION"/>
+		  <setting name="jdbcTypeForNull" value="OTHER"/>
+		  <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+    -->
+    </settings>
+     <!-- 所有用到的实体类 -->
+	<typeAliases>
+	
+		<typeAlias alias="CustomerApply" type="com.fairyhawk.entity.customer.CustomerApply"/>
+	
+	
+     	<!-- USER 登录 权限 相关 -->
+		<typeAlias alias="customer" type="com.fairyhawk.entity.customer.Customer"/>
+		<typeAlias alias="User" type="com.fairyhawk.entity.user.User"/>
+		<typeAlias alias="Function" type="com.fairyhawk.entity.user.Function"/>
+		<typeAlias alias="Group" type="com.fairyhawk.entity.user.Group"/>
+		<typeAlias alias="QueryGroupCondition" type="com.fairyhawk.entity.user.QueryGroupCondition"/>
+		<typeAlias alias="QueryLoginLogCondition" type="com.fairyhawk.entity.user.QueryLoginLogCondition"/>
+		
+		<typeAlias alias="LoginLog" type="com.fairyhawk.entity.user.LoginLog"/>
+		<typeAlias alias="Role" type="com.fairyhawk.entity.user.Role"/>
+		 <typeAlias alias="QueryUserCondition" type="com.fairyhawk.entity.user.QueryUserCondition"/>
+		<typeAlias alias="QueryRoleCondition" type="com.fairyhawk.entity.user.QueryRoleCondition"/>
+		<typeAlias alias="QueryFunctionCondition" type="com.fairyhawk.entity.user.QueryFunctionCondition"/>
+		<typeAlias alias="RoleFunction" type="com.fairyhawk.entity.user.RoleFunction"/>
+		<typeAlias alias="QueryRoleFunctionCondition" type="com.fairyhawk.entity.user.QueryRoleFunctionCondition"/>
+    	<typeAlias alias="UserRole" type="com.fairyhawk.entity.user.UserRole"/>
+     
+         
+		<!-- 订单相关 -->  
+		
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="config/mybatis/publicMapper.xml" />
+		
+		<mapper resource="config/mybatis/customer/CustomerMapper.xml" />
+		<mapper resource="config/mybatis/customer/CustomerApplyMapper.xml" />
+		
+		<!-- user相关 -->
+		<mapper resource="config/mybatis/user/UserMapper.xml" />
+		<mapper resource="config/mybatis/user/RoleMapper.xml" />
+		<mapper resource="config/mybatis/user/FunctionMapper.xml" />
+		<mapper resource="config/mybatis/user/RoleFunctionMapper.xml" />
+		<mapper resource="config/mybatis/user/GroupMapper.xml" />
+		<mapper resource="config/mybatis/user/UserRoleMapper.xml" />
+		<mapper resource="config/mybatis/user/LoginLogMapper.xml" />
+		
+		
+	</mappers>
+</configuration>

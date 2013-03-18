@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>购买—HighSo嗨学网—远程网络职业教育领跑者—尚德机构旗下</title>
+<link rel="stylesheet" type="text/css" href="http://import.highso.org.cn/styles/web/public/payment_new.css" />
+	<script language="javascript" src="http://172.16.123.150:8080/ssi/js/common/jquery-1.7.2.min.js"></script>
+	<script language="javascript" src="http://172.16.123.150:8080/ssi/js/common/jquery-validation-1.9.0/jquery.validate.min.js"></script>
+	<script language="javascript" src="http://172.16.123.150:8080/ssi/js/util/ssi_util.js"></script>
+	
+ 
+<script type=text/javascript>
+	var baselocation = 'http://172.16.123.150:8080/ssi';
+	var importURL = 'http://172.16.123.150:8080/ssi';
+	var locationIndex = 0;
+	var payOkURL = "http://172.16.123.150:8080/ssi/static/web/column/index_1.shtml";
+	function enterSubmit(event) {
+		var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;   
+        if (keyCode == 13) {   
+        	login(3);
+        }
+	}
+	function changedAddressTime(stm){ 
+		changedAddress();
+		$("#sendTime").val(stm);
+	}
+</script>
+
+<script type="text/javascript">
+ 
+//登录注册切换
+$(function(){
+	$("div.buyReg_con:gt(0)").hide();
+    $("ul.buyReg_tit li").click(function() {
+        $(this).addClass("current").siblings("li").removeClass("current");
+		$("div.buyReg_con:eq("+$("ul.buyReg_tit li").index(this)+")").show().siblings("div.buyReg_con").hide();
+    });
+});
+	
+		function validatorRegform(){
+			jQuery.validator.addMethod("mobile", function(value, element) {
+				var pattern = /^1{1}[0-9]{10}$/;
+				return this.optional(element) || pattern.test(value);
+			});
+			
+			$("#regForm").validate({
+				rules: {
+				"customer.cusPwd" : {
+				required : true,
+				maxlength : 20,
+				minlength : 6
+				},
+				"customer.cusName" : {
+				required : true,
+				maxlength : 20
+				},
+				"customer.mobile" : {
+				required : true,
+				mobile : true
+				},
+				"customer.email" : {
+				required : true,
+				email : true,
+				maxlength : 50,
+				remote : {
+				data: {
+				'customer.email': function () {
+				return $("input[id=udRegEmail]").val();
+				}
+				},
+				async : false,
+				url :  baselocation+"/customer/cus!checkEmail.action",
+				type : "post"
+				}
+				}
+			
+				},
+				messages : {
+				"customer.email" : {
+				remote : "该邮箱已经注册过",
+				required : "请填写邮箱",
+				email : "请输入正确的邮箱地址"
+				},
+				"customer.cusName" : {
+				required : "请输入昵称",
+				maxlength : "昵称不能超过20个字"
+				},
+				"customer.cusPwd" : {
+				required : "密码必须填写",
+				maxlength : "密码为6到20位",
+				minlength : "密码为6到20位"
+				},
+				"udCusPwdConfirm" : {
+				equalTo : "密码不一致"
+				},
+				"customer.mobile" : {
+				required : "请输入手机号码",
+				mobile : "请输入正确的手机号码"
+				}
+				},
+				errorPlacement: function(error, element) {
+				if ( element.is(":radio") )
+				error.appendTo( element.parent().next().next() );
+				else if ( element.is(":checkbox") )
+				error.appendTo(element.parent().find("span")).css("color", "red");
+				else
+				error.appendTo(element.parent().parent().next().find("td:last").html("")).css("color", "red");
+				},
+				success: function(label) {
+				label.html("<img src='http://import.highso.org.cn/images/web/public/duihao.png'/>");
+				}
+				}); 
+		}
+		
+	function udregister (){
+	 	if($("#regForm").valid()) {
+	 		alert("验证通过");
+		}
+	}
+	$().ready(function() {
+			validatorRegform();
+	});
+		 
+</script>
+
+</head>
+
+<body class="scrol">
+ 
+<div id="buyReg" style="display: block;" class="buyReg">
+	<h4>快速注册<span class="buyReg_close"></span></h4>
+    <ul class="buyReg_tit"><li class="current">快速注册</li><li>登&nbsp;&nbsp;录</li></ul>
+    <div class="buyReg_con">
+      <form id="regForm" name="regForm">
+      <table width="100%" cellspacing="0" cellpadding="0" border="0" class="free_register">
+          <tbody><tr><th class="login_left">邮&#12288;&#12288;箱：</th>
+              <td><input type="text" class="txt_input" name="customer.email" id="udRegEmail" maxlength="30" onkeypress="return regEmailChg(event)"></td>
+          </tr>
+          <tr>
+              <th>&nbsp;</th>
+              <td id="reg_email_msg" class="bg_pas2"><p class="bg_mail font_hui">请输入您真实的邮箱(只支持小写)</p></td>
+          </tr>
+          <tr>
+              <th class="login_left">密&#12288;&#12288;码：</th>
+              <td><input type="password" class="txt_input" name="customer.cusPwd" id="udRegPwd" maxlength="20"></td>
+          </tr>
+          <tr>
+              <th>&nbsp;</th>
+              <td class="bg_pas2"><p class="bg_pas font_hui">密码为6-12位的字母或数字</p></td>
+          </tr>
+          <tr>
+              <th class="login_left">确认密码：</th>
+              <td><input type="password" class="txt_input" maxlength="20" id="udCusPwdConfirm" name="udCusPwdConfirm" equalto="#udRegPwd"></td>
+          </tr>
+          <tr>
+              <th valign="top">&nbsp;</th>
+              <td class="bg_pas2"><p class="bg_rep font_hui">请再次输入密码</p></td>
+          </tr>
+          <tr>
+              <th class="login_left">手机号码：</th>
+              <td><input type="text" class="txt_input" name="customer.mobile" id="regMobile" maxlength="15"></td>
+          </tr>
+          <tr>
+              <th valign="top">&nbsp;</th>
+              <td class="bg_pas2"><p class="bg_tel font_hui">填写手机号码</p></td>
+          </tr>
+          <tr>
+          <th class="login_left">验&nbsp;证&nbsp;码：</th>
+          <td style="text-align:inherit">
+              <input type="text" id="randomcode" name="randomCode" style="width:110px" class="txt_input">
+              <span style="float:left; padding-left:10px;">
+                  <img style=" vertical-align:middle" src="http://172.16.123.150:8080/ssi/util/randomCode.action?random=Math.random();" alt="验证码，点击图片更换" onclick="this.src='http://172.16.123.150:8080/ssi/util/randomCode.action?random='+Math.random();">
+              </span>						
+          </td>
+        </tr>
+         <tr>
+          <th>&nbsp;</th>
+          <td>&nbsp;</td>
+         </tr>
+          <tr>
+              <td>&nbsp;</td>
+              <td><p class="txt_dif"><input type="checkbox" name="highsoAgreement" class="login_list_ck" id="ud_highso_agreement" checked="">
+                  <a href="http://172.16.123.150:8080/ssi/static/web/column/252/index_1.shtml" target="_blank">
+                  同意接受HighSo协议</a></p></td>
+          </tr>
+          <tr><td>&nbsp;</td><td><p class="bt_register"><a href="javascript:udregister()"><img id="register_2.5" src="http://import.highso.org.cn/images/web/public/buy/buySub5Bg.jpg" alt="注册"></a></p></td></tr>
+      </tbody>
+      </table>
+	  </form>
+    </div>
+    <div class="buyReg_con" style="display: none;">
+      <form id="login_form_3" name="login_form_3">
+      <table width="100%" cellspacing="0" cellpadding="0" border="0" class="free_register">
+          <tbody><tr>
+              <th class="login_left">邮&#12288;&#12288;箱：</th>
+              <td><input type="text" name="customer.email" class="txt_input" id="login_email_3" maxlength="30" onkeypress="iptLowerCase(event)"></td>
+          </tr>
+          <tr>
+              <th>&nbsp;</th>
+              <td>&nbsp;</td>
+          </tr>
+          <tr>
+              <th class="login_left">密&#12288;&#12288;码：</th>
+              <td><input type="password" onkeyup="quickLogKeyUp(event, 3)" name="customer.cusPwd" class="txt_input" id="login_pwd_3" maxlength="20"></td>
+          </tr>
+          <tr>
+              <th>&nbsp;</th><td>&nbsp;</td>
+          </tr>
+          <tr>
+              <td>&nbsp;</td>
+              <td><p class="txt_dif"><span class="fl"><input type="checkbox" name="remember_me_div" id="remeber_me_3" checked="">记住我</span>
+                  <span class="fl pl140"><a href="http://172.16.123.150:8080/ssi/static/web/column/132/index_1.shtml" target="_blank">忘记密码？</a></span></p>
+              </td>
+          </tr>
+          <tr>
+              <td>&nbsp;</td>
+              <td><p class="bt_register"><a href="javascript:login(3)" class="bt_register_input"><img id="login_2.5" src="http://import.highso.org.cn/images/web/public/buy/buySub6Bg.jpg" alt="登录"></a></p></td>
+          </tr>
+      </tbody></table>
+	  </form>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<!-- 需要引用不同的数据源时 设置不同的parent即可 -->
+	<bean id="genericDao" abstract="true" class="com.fairyhawk.common.dao.GenericDaoImpl">
+        <property name="myBatisDao" ref="myBatisDao"/>
+    </bean>
+	
+	<!--  配置hessian客户端 -->
+	
+	<bean id="fairyHessianGateWay"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceInterface"
+			value="com.fairyhawk.service.hessian.FairyhawkHessianServiceSupport">
+		</property>
+		<property name="serviceUrl">
+			<value>http://127.0.0.1/opens_admin/hessian/fairyhawkHessianServiceGateWay
+			</value>
+		</property>
+		<property name="readTimeout">
+			<value>100000</value>
+		</property>
+		<property name="proxyFactory">
+			<bean class="com.fairyhawk.service.hessian.HessianClientProxyFactory" />
+		</property>
+	</bean>
+	
+     <!-- 邮件发送线程类-->
+	<bean name="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.163.com" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="username" value="testopenmail@163.com"></property>
+		<property name="password" value="1q2w3e"></property>
+		<property name="javaMailProperties">
+			<map>
+				<entry key="mail.smtp.auth" value="true" />
+			</map>
+		</property>
+	</bean>
+	<!-- 邮件发送服务类-->
+	<bean id="emailService" class="com.fairyhawk.common.service.EmailServiceImpl">
+		<property name="javaMailSender" ref="javaMailSender"></property>
+	</bean>
+	
+    
+    
+</beans>

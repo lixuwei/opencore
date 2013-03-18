@@ -1,0 +1,71 @@
+@charset "utf-8";
+body,div,p,ul,ol,dl,dt,dd,li,form,input,table,img,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea,blockquote,th,td{margin:0;padding:0;}
+h1, h2, h3, h4, h5, h6{ font-size:100%;}
+body{background-color:#000; color:#333; font-family:"宋体",Arial, Helvetica, sans-serif; font-size:12px;font-style:normal;font-weight:normal;}
+em, b, i{font-style:normal;font-weight:normal;}
+a{color:#333;text-decoration:none; outline:none;}
+a:hover{color:#a10000; text-decoration:underline;}
+img,a img{border:0 none; vertical-align: middle;}
+ul,ol{ list-style-type:none;}
+abbr,acronym{ border:0;}
+.clear{ clear:both; height:0; overflow:hidden;}
+.space{ clear:both; display:block; height:10px; overflow:hidden;}
+/*header*/
+#header{ background:#EC4F02;}
+.mid_header{ width:1000px; height:60px; overflow:hidden; margin:0 auto;}
+#header .logo{ float:left; margin-top:0;}
+.h_help{ float:right; color:#fff; line-height:60px;}
+.h_help a{ color:#fff}
+.wrap{ width:100%; margin:0 auto; position:relative;}
+.main{ background:#fff; border:3px solid #E2D8CB; margin:20px auto 0; width:952px; overflow:hidden;}
+.log_title,.reg_title{ background:url("http://import.highso.org.cn/images/web/public/logReg_index/logReg_title_bg.png") no-repeat; color:#FFFFFF; height:69px; line-height:69px; text-indent:220px;}
+.reg_title{ background-position:0 -69px;}
+/*注册*/
+.left_con{ width:599px; float:left; display:inline; background:#f5f3f3; padding-bottom:1000px; margin-bottom:-1000px; border-right:1px solid #d8cfc9;}
+.right_con{ width:351px; float:right; display:inline; background:#fafafa; padding-bottom:1000px; margin-bottom:-1000px; border-left:1px solid #fff;}
+.reg{ float:left; overflow:hidden; padding:45px 0 100px 100px; border:none;}
+.reg legend{ display:none; width:550px; height:40px; text-indent:-9999px; background:url(../images/reg_tt.png) no-repeat 30px 0;}
+.reg_item{ line-height:32px; clear:both; min-height:72px;}
+.reg_item label{ display:block; width:74px; float:left; text-align:right;}
+.txt_input{ float:left; width:228px; height:26px; line-height:26px; background:url(http://import.highso.org.cn/images/web/public/input_bg.gif); padding:0 5px; margin-top:2px; border:1px solid #b5b5b5;}
+.txt_input_error{ border:1px solid #fd893b; outline:2px solid #ffddc6;}
+input.error{border:1px solid #fd893b; outline:2px solid #ffddc6;}
+input.txt_active{ border:1px solid #79bff9; outline:2px solid #d5ecff;}
+.sec_class{ width:238px; padding:2px;}
+.ver_input{ width:90px; height:26px; line-height:26px; padding:0 10px; margin-right:10px;}
+.ver img{ float:left; vertical-align:middle; margin:5px 10px 0 0; cursor:pointer; border:1px solid #e2e2e2;}
+.ver .v_txt{ float:left; margin-left:10px;}
+.ver .v_txt a{ color:#0068b9;}
+.reg_ck{ vertical-align:-3px; margin:0 5px 0 84px;}
+.privacy_link{ float:left; }
+.reg_item a{ color:#0068b9;}
+.txt_prompt{ float:left; clear:both; color:#666; height:40px; line-height:40px; margin-left:75px; background:url(../images/jiao2.png) no-repeat left;}
+.txt_prompt_fouce{ color:#389a0a;}
+.reg span.error{ float:left; clear:both; color:#ff7010; height:30px; line-height:30px; margin-left:75px;}
+.reg span.success{  float:left; clear:both; width:17px; height:17px; padding:0; margin-top:6px; background:url(../images/checkmark2.png) no-repeat;}
+.reg_btn,.log_btn,.reg_rbtn,.log_rbtn{ display:block; width:114px; height:27px; background:url(http://import.highso.org.cn/images/web/public/logReg_index/logReg_button.png) no-repeat; text-indent:-9999px;}
+.reg_btn{ float:left; margin:0 10px 0 74px; background-position:0 -27px;}
+/*登录*/
+.log{ float:left; overflow:hidden; padding:45px 0 100px 100px; border:none;}
+.log legend{ display:none; width:550px; height:40px; text-indent:-9999px; background:url(../images/log_tt.png) no-repeat 30px 0;}
+.log_item{ line-height:36px; clear:both; margin-top:15px; font-family:"微软雅黑";}
+.log_item label{ display:block; width:74px; float:left;}
+.log_btn{ margin-left:100px; background-position:0 0;}
+.remember_ck{ vertical-align:-3px; margin:0 5px 0 84px;}
+.log_30{ color:#999; margin-right:10px;}
+
+/*右侧部分*/
+.reg_process{ width:180px; margin:50px auto 0; overflow:hidden;}
+.reg_process h3{ text-align:center; font-size:16px;}
+.logreg_rbtn{ padding:20px 0;}
+.reg_rbtn{ background-position:0 -81px; margin:0 auto;}
+.log_rbtn{ background-position:0 -54px; margin:0 auto;}
+.free_title{ font-size:14px; color:#FF0000; margin-bottom:20px;}
+.reg_process .reg_ul li{ height:20px; line-height:20px; padding-left:20px; background:url(http://import.highso.org.cn/images/web/public/logReg_index/logReg_right_img.png) no-repeat -160px 4px; margin-top:8px; color:#444;}
+.reg_process .reg_ad{ color:#ff7010; font-family:"微软雅黑"; font-size:20px; margin-top:10px;}
+/*footer*/
+#footer{ width:100%; background:#1B1B1B; border-top:1px solid #615A52; margin-top:35px; overflow:hidden;}
+.f_webinfo{ color:#B6AFAF; margin:0 auto; padding:37px 0 27px; width:960px; overflow:hidden;}
+.webinfo{ float:left; line-height:24px;}
+.f_img{ float:right;}
+.f_img img{ margin-left:30px;}

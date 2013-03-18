@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<!-- 全局变量设置 -->
+	<!-- 
+    <constant name="struts.locale" value="zh_CN"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.ui.theme" value="simple"/>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	  -->
+	 <!-- 上传相关。 -->
+	 <!-- 
+	 <constant name="struts.multipart.saveDir" value="struts2_upload_temp"/>
+    <constant name="struts.multipart.maxSize" value="10485760"/>
+
+    <constant name="struts.convention.action.suffix" value="Action"/>
+    <constant name="struts.convention.package.locators" value="action"/>
+    <constant name="struts.convention.action.mapAllMatches" value="true"/>
+    <constant name="struts.convention.default.parent.package"    value="struts-default"/>
+    -->    
+              
+	<!-- 配置项目适应的默认struts-default,json-default为 struts-json-plugin-2.2.1.jar下struts-plugin.xml配置的-->
+	
+	<package name="fairyhawk-default" namespace="/" extends="struts-default,json-default">
+	
+	  	<interceptors>
+	  			
+		        <!-- 限制后台必须登录才可以访问 -->
+				<interceptor name="limitForAdmin" class="com.fairyhawk.common.intercepter.LimitIntercepter"/>
+				<!-- 简单过滤非法SQL -->
+				<interceptor name="killsql" class="com.fairyhawk.common.intercepter.KillSqlIntercepter"></interceptor>
+				<!-- 举例：只拦截某些方法 -->
+				<interceptor name="limitforoneuser" class="com.fairyhawk.common.intercepter.LimitOneUserForWeb">
+					 	<param name="includeMethods">toUserCenter,toListenMyCourse,toMyCourse</param>
+				</interceptor>
+			 
+            	<!-- 项目后台用拦截器 -->
+            	<interceptor-stack name="admin_defaultStack">
+            		<interceptor-ref name="limitForAdmin"/>
+	                <interceptor-ref name="exception"/>
+	                <interceptor-ref name="alias"/>
+	                <interceptor-ref name="servletConfig"/>
+	                <interceptor-ref name="i18n"/>
+	                <interceptor-ref name="prepare"/>
+	                <interceptor-ref name="chain"/>
+	                <interceptor-ref name="debugging"/>
+	                <interceptor-ref name="scopedModelDriven"/>
+	                <interceptor-ref name="modelDriven"/>
+	                <interceptor-ref name="fileUpload"/>
+	                <interceptor-ref name="checkbox"/>
+	                <interceptor-ref name="multiselect"/>
+	                <interceptor-ref name="staticParams"/>
+	                <interceptor-ref name="actionMappingParams"/>
+	                <interceptor-ref name="params">
+	                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+	                </interceptor-ref>
+	                <interceptor-ref name="conversionError"/>
+	                <interceptor-ref name="validation">
+	                    <param name="excludeMethods">input,back,cancel,browse</param>
+	                </interceptor-ref>
+	                <interceptor-ref name="workflow">
+	                    <param name="excludeMethods">input,back,cancel,browse</param>
+	                </interceptor-ref>
+            	</interceptor-stack>
+            	
+            	<!--无需登录即可访问拦截器 -->
+            	 <interceptor-stack name="noLoginStack">
+                	<interceptor-ref name="basicStack"/>
+            	</interceptor-stack>
+            
+            </interceptors>
+            
+           
+            
+             <!-- 默认拦截 器-->
+            <default-interceptor-ref name="admin_defaultStack"/>
+            
+            <global-results>
+	            <result name="login" type="redirect">/login.jsp</result>
+	            <result name="error">/error/error.jsp</result>
+	      		<result name="reLogin" type="redirect">/jsp/login/loginOut.jsp</result>
+	        	<result name="success" type="redirect">/jsp/login/index.jsp</result>
+	            <result name="login" type="redirect">/sys/login!loginInput.action</result>
+	            <result name="loginError" type="redirect">login!loginInput.action?rdtType=1</result>
+	            <result name="limitVerifyError" type="redirect">/jsp/login/limitVerifyError.jsp</result>
+	            <result name="changeSuccess" type="redirect">/jsp/common/success.jsp</result>
+	            <result name="homePage" type="redirect">/</result>
+	            <result name="operatorLimit" type="redirect">/static/web/global/toIndex.html</result>
+        	</global-results>
+        	
+	         <global-exception-mappings>
+	        	<exception-mapping result="error" exception="Exception"></exception-mapping>
+	         </global-exception-mappings>
+            
+            
+	</package>
+	
+	
+    
+ 	<include file="config/struts/struts-customer.xml"/>
+ 	
+ 	<include file="config/struts/struts-util.xml"/>
+    <include file="config/struts/struts-user.xml"/>
+    
+    
+</struts>    

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomerApplyMapper" >
+
+ 
+ 	<insert id="addOneCustomerApply"  parameterType="CustomerApply" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+ 		INSERT INTO cus_customer_apply_tbl (hangYe, diQu, userName, mobile, email,createTime) 
+		VALUES(#{hangYe},#{diQu},#{userName}, #{mobile},#{email},#{createTime}) 
+ 	 </insert>
+ 	 
+
+	<select id="getCustomerApplylit" parameterType="java.util.HashMap"
+		resultType="CustomerApply">
+		SELECT   id,  hangYe,  diQu,  userName,  mobile,  email ,createTime
+		FROM  cus_customer_apply_tbl  order by id desc
+		<include refid="publicMapper.pageEnd" />
+	</select>
+	
+	<select id="getCustomerApplylitCount" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select count(1) from cus_customer_apply_tbl 
+    </select>
+	
+
+
+
+
+
+
+</mapper>

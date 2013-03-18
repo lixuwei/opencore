@@ -1,0 +1,122 @@
+/*  
+Theme Name:WestDrug Theme
+Author URI:http://www.westdrug.com
+Version:1.1
+Author:westdrug
+Description: River's lake in the heart, and the heart has DuoDa river's lake have DuoDa.
+Update @ 2013/3/4
+*/
+
+/*------------commonalityStyle------------*/
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;}
+body{background:#FFF;font:12px/20px 'Arial','Helvetica Neue','Helvetica','sans-serif';word-break:break-all;word-wrap:break-word;}
+ul,ol,li{list-style:none}
+.clearfix:after{content:'';display:block;height:0;clear:both;overflow:hidden;}
+.clearfix{display:inline-block;}
+* html .clearfix{height:1%;}
+.clearfix{display:block;}
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}a:focus{outline:none;-moz-outline:none;}
+a:active{outline:none;blr:expression(this.onFocus=this.blur())}
+a,img{border:0 none;}
+.txtarea{height:auto;}
+input,select,button{vertical-align:middle;}textarea{resize:none;}
+h1, h2, h3, h4, h5, h6 {font-weight: bold;}
+h1 {font-size: 36px;line-height: 45px;}
+h2 {font-size: 24px;line-height: 30px;}
+h3 {font-size: 18px;line-height: 22px;}
+h4 {font-size: 16px;line-height: 20px;}
+h5 {font-size: 14px;line-height: 18px;}
+h6 {font-size: 12px;line-height: 16px;}
+article, 
+aside, 
+details, 
+figcaption, 
+figure, 
+footer, 
+header, 
+hgroup, 
+menu, 
+nav, 
+section{display:block;}
+.dis{display:block;}
+.undis{display:none;}
+.fl { float: left;display: inline; }
+.fr { float: right;display: inline; } 
+
+.logo a,.slogan,.tel,.title01,.line-gray,#apple-list dt,.footer .web-mark,.slogan02,.menu-title span { background: url(../images/268-sprite.png) no-repeat; }
+.pdlr8 { padding: 0 8px; }
+.pdlr15 { padding: 0 15px; }
+.mtb2em { margin: 2em 0; }
+
+  /*------------268Style------------*/
+  .wrap { width: 960px;margin: 0 auto; }
+
+  .header { height: 100px;position: relative; }
+  .logo { margin: 8px 0 0 4px; }
+  .logo a { display: block;width:158px;height: 84px;text-indent: -9999px;background-position: 0 0; }
+  .slogan { width: 351px;height: 29px;text-indent: -9999px;display: block;background-position: -158px 0;margin: 3.5em 0 0 1.5em;+margin: 2.6em 0 0 1.1em;_margin: 2.6em 0 0 1.1em; }
+  .tel { font-size: 18px;font-family: 'Georgia' , 'Microsoft YaHei';color: #888;padding-left: 152px;height: 24px;background-position: 0 -100px;margin: 2.6em 4px 0 0; }
+
+  .nav { background: url(../images/nav-bg.jpg) repeat-x 0 0;height: 40px;border: 1px solid #FE0000;padding-left: 2em;position: relative; }
+  .nav ul li { float: left;display: inline;height: 40px;line-height: 40px;margin: 0 15px; }
+  .nav ul li a { font-size: 14px;font-family: 'Microsoft YaHei';text-shadow: -1px -1px 0px #870002;color: #FFF;font-weight: bold; }
+
+  .slide { height: 380px;background: url(../images/slide-pic01.jpg) no-repeat 0 0;position: relative; }
+  .aside-wrap { position: absolute; right: 15px;top: -36px;width: 298px;z-index: 2013; }
+  .title01 { height: 35px;line-height: 35px;text-indent: -9999px;background-position: -158px -29px; }
+  .apple-wrap { margin-right: 10px;background: #848B91;padding: 0 3px 3px;overflow: hidden;display: block; }
+  .apple-bg { background: #696969; }
+  .line-gray { height: 10px;content: " ";overflow: hidden;font-size: 0;line-height: 10px;background-position: 0 -193px; }
+  .txt { color: #DDD;font-size: 12px;font-weight: normal;padding: 10px 10px 0;}
+  #apple-list { margin: 0;padding: 10px 0;overflow: hidden; }
+  #apple-list dt { height: 21px;background-position: 0 -139px; }
+  #apple-list dd { margin: 10px 0 0 24px; }
+  #apple-list dd select,#apple-list dd input { vertical-align: middle;height: 22px;line-height: 22px;background: #444;border: none;padding: 0 4px;color: #797979;width: 155px; }
+  #apple-list dd select { width: 162px; }
+  #apple-list dd .a-name { color: #DDD;font-size: 14px;font-family: 'Microsoft YaHei';margin-right: 10px;display: inline-block;width: 56px;text-align: right;vertical-align: middle; }
+  #apple-list dd input.suBtn,#appBtn button { width: 94px;height: 30px;line-height: 30px;margin-left: 5px;text-align: center;font-size: 16px;color: #FFF;text-shadow: -1px -1px 0px #922220;border: 1px solid #DC0000;+border: none;_border: none;background: -webkit-gradient(linear, left top, left bottom, from(#FE0000), to(#B80000));background: -moz-linear-gradient(top, #FE0000, #B80000);filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#FE0000', endColorstr='#B80000');font-family: 'Microsoft YaHei';border-radius: 3px;cursor: pointer; }
+  
+  .main-bottom { background: #FFF url(../images/main-bg.jpg) repeat-x left 0;overflow: hidden; }
+  .img-wrap li { float: left;display: inline;margin: 20px 17px; }
+  .four-list { width: 66%; }
+  .news { width: 31%; }
+  .news-title { height: 30px;line-height: 28px;border-bottom: 1px solid #B60001;font-size: 16px;font-weight: normal;font-family: 'Microsoft YaHei'; }
+  .news-title span { display: inline-block;padding: 0 3px;border-bottom: 2px solid #B60001;color: #666; }
+  .news ol li { margin-top: 8px;padding: 0 0 3px 15px;border-bottom: 1px solid #E2E2E2;background: url(../images/ico-01.png) no-repeat 3px 8px; }
+  .news ol li a,.four-list table td ol li a { color: #666; }
+  .news ol li a:hover,.four-list table td ol li a:hover,.menu-list li a:hover { color: #B60001; }
+  .list-title { height: 30px;line-height: 28px;overflow: hidden;background: #A4A4A4; }
+  .list-title p { height: 25px;line-height: 25px;margin-right: .25em;overflow: hidden;background: #F5F5F5; }
+  .list-title p span { display: inline-block;text-align: center;margin: 0 1em;font-size: 16px;color: #666;width: 17.5%;+width: 16.5%;_width: 16.5%;font-family: 'Microsoft YaHei';font-weight: normal; }
+  .four-list table { margin: 12px 15px 0;}
+  .four-list table td { padding-left: 25px;border-left: 1px dashed #DDD; }
+  .four-list table td ol li { margin-bottom: 10px; }
+ 
+  .footer { margin: 1em 0;text-align: center;color: #666;background: url(../images/foot-line.jpg) no-repeat center top;overflow: hidden;clear:both;height: 150px; }
+  .footer .web-mark { height: 51px;background-position: 23.5em -256px;margin: 2em 0 1.5em; }
+
+/************second page************/
+  .slogan02 { position: absolute;right: -1px;top: -1px;width: 282px;height: 40px;background-position: 0 -201px;border: 1px solid #5F5F5F; }
+
+  #second-page { margin-top: 1.5em;overflow: hidden; }
+  #second-page .news { width: 26%; }
+  #second-page .four-list { width: 71%; }
+  .shadow-bg { background: #A4A4A4;padding-bottom: 0.25em; }
+  .shadow-bg menu { background: #F5F5F5;margin: 0 0.25em 0 0;overflow: hidden;padding: 10px;}
+  .menu-title { height: 34px;line-height: 34px;font-size: 16px;color: #666;text-align: center;font-family: 'Microsoft YaHei';border-bottom: 2px solid #B60001; }
+  .menu-title span { display: inline-block;padding-left: 24px;text-align: center;background-position: -490px -39px; }
+  .menu-list li { text-align: center;line-height: 30px;margin-top: 8px;border-bottom: 1px dotted #E2E2E2; }
+  .menu-list li a { font-size: 14px;color: #666; }
+  .n-title { line-height: 34px;font-size: 16px;color: #B60001;margin-bottom: 2em;font-family: 'Microsoft YaHei'; }
+  .n-title font { font-size: 12px;color: #888; }
+  #appBtn button { width: 160px;height: 45px;margin: 1em 0; }
+  .txt02 p { color: #666;line-height: 180%;text-indent: 24px; }
+  .txt02 dl { line-height: 240%;color: #666; }
+  
+  #bs-tab { margin: 0; }
+  #bs-tab th,#bs-tab td { padding: 5px 10px;color: #666;border: 1px solid #C1C1C1; }
+  #bs-tab .bg-1 { background: #5F5F5F;color: #FFF; }
+  #anli td { padding: 0;background: url(../images/anli-bg.png) no-repeat center center; }
+  
+

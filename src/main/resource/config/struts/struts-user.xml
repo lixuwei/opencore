@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="sys" namespace="/sys" extends="fairyhawk-default">
+        <!-- 登录 -->
+        <action name="login" class="com.fairyhawk.action.user.LoginAction">
+        	<result name="login" type="dispatcher">/jsp/login/login.jsp</result>
+			<result name="success" type="redirect">backMain.action</result>
+			<result name="loginOut" type="redirect">/jsp/login/loginOut.jsp</result>
+			<result name="json" type="json">
+        		<param name="root">json</param>
+        	</result>
+            <!--  无需登录就可访问   -->
+             <interceptor-ref name="noLoginStack"></interceptor-ref>
+		</action>
+		
+		<action name="backMain" class="com.fairyhawk.action.user.LoginAction">
+			<result name="success" type="dispatcher">/jsp/login/main.jsp</result>
+			<result name="topframe" type="dispatcher">/jsp/login/topframe.jsp</result>
+			<result name="leftframe" type="dispatcher">/jsp/login/leftframe.jsp</result>
+			<result name="switchframe" type="dispatcher">/jsp/login/switchframe.jsp</result>
+			<result name="rightframe" type="dispatcher">/jsp/login/rightmian.jsp</result>
+			<result name="bottomFrame" type="dispatcher">/jsp/login/bottomFrame.jsp</result>
+			 <result name="json" type="json">
+        		<param name="root">json</param>
+        	</result>
+			
+		</action>
+		
+		<!-- 权限管理 -->
+		<action name="func" class="com.fairyhawk.action.user.FunctionAction">
+			<result name="toAddFunction">/jsp/user/function_add.jsp</result>
+			<result name="toUpdateFunction">/jsp/user/function_update.jsp</result>
+			<result name="showFunctionList">/jsp/user/function_list.jsp</result>
+			<result name="reshow" type="redirect">/sys/func!showFunctionList.action</result>
+			<result name="json" type="json">
+        		<param name="root">json</param>
+        	</result>
+			
+		</action>
+		
+		<!-- 用户自维护 -->
+		 <action name="user" class="com.fairyhawk.action.user.UserAction">
+        	<result name="changePwd">/jsp/user/changePwd.jsp</result>
+            <result name="userManager">/jsp/user/userManager.jsp</result>
+        	<result name="listAllUser">/jsp/user/user_list.jsp</result>
+        	<result name="relistAllUser" type="redirect">/sys/user!listAllUser.action?page.currentPage=1</result>
+            <result name="listUserByGroupId">/jsp/user/user_list.jsp</result>
+            <result name="toAddUser">/jsp/user/user_add.jsp</result>
+            <result name="toEditUser">/jsp/user/user_edit.jsp</result>
+            <result name="listAllUserForStu" type="redirect">user!listAllUserForStu.action?QueryUserCondition.currentPage=1</result>
+            <result name="toEditUserGradeSubjectRoleSec">/jsp/user/setRole.jsp</result>
+            <result name="toViewUserGradeSubjectRoleSec">/jsp/user/viewRole.jsp</result>
+            <result name="userAdd">/jsp/user/userAdd.jsp</result>
+            <result name="toUpdatePwd">/jsp/user/user_update_pwd.jsp</result>
+            <result name="toSetUserContentRole">/jsp/user/user_setContentRole.jsp</result>
+            <result name="reshow">/sys/user!toEditUserContentRole.action</result>
+            <result name="json" type="json">
+        		<param name="root">json</param>
+        	</result>
+        </action>
+        <!-- 用户组管理 -->
+         <action name="group" class="com.fairyhawk.action.user.GroupAction">
+            <result name="toAddGroup">/jsp/user/group_add.jsp</result>
+            <result name="GroupTreeList">/jsp/user/group_list.jsp</result>
+            <result name="techIndex">/jsp/user/groupTree_techIndex.jsp</result>
+            <result name="techLeftframe">/jsp/user/groupTree_techLeftframe.jsp</result>
+            <result name="techRightframe">/jsp/user/groupTree_techRightframe.html</result>
+            <result name="switchframe">/jsp/user/switchframe.jsp</result>
+            <result name="toDeleteGroup">/jsp/user/group_delete.jsp</result>
+             <result name="updateGroup">/jsp/user/group_update.jsp</result>
+            <result name="deleteGroup" type="redirect">group!toDeleteGroup.action</result>
+            <result name="refesh">/sys/group!toDeleteGroup.action</result>
+            
+            <result name="json" type="json">
+				<param name="root">json</param>
+			</result>
+			
+        </action>
+        <!-- 角色管理 -->
+        <action name="roleAdmin" class="com.fairyhawk.action.user.RoleAction">
+            <result name="roleList">/jsp/user/roleList.jsp</result>
+            <result name="toEditRole">/jsp/user/role_edit.jsp</result>
+            <result name="toAddRoleRef">/jsp/user/role_addRef.jsp</result>
+            <result name="toEditRoleRef" type="redirect">>/sys/user!toEditUserGradeSubjectRoleSec.action?user.userId=${userId}</result>
+            <result name="json" type="json">
+				<param name="root">json</param>
+			</result>
+        </action>
+    </package>
+</struts>

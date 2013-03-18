@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FunctionMapper" >
+
+    <resultMap id="FunctionResult" type="Function">
+        <result property="functionId" column="FUNCTION_ID" />
+        <result property="parentFunctionId" column="PARENT_FUNCTION_ID" />
+        <result property="functionName" column="FUNCTION_NAME"/>
+        <result property="functionTypeId" column="FUNCTION_TYPE_ID" />
+        <result property="functionUrl" column="FUNCTION_URL"/>
+        <result property="status" column="STATUS" />
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <!-- 
+        <result property="subFunctionList" column="FUNCTION_ID" select="getFunctionListByParentId"/>
+         -->
+        <result property="level" column="LEVEL"/>
+    </resultMap>
+
+    <sql id="SYS_FUNCTION_TBL_columns">
+        SYS_FUNCTION_TBL.FUNCTION_ID,
+        SYS_FUNCTION_TBL.PARENT_FUNCTION_ID,
+        SYS_FUNCTION_TBL.FUNCTION_NAME,
+        SYS_FUNCTION_TBL.FUNCTION_TYPE_ID,
+        SYS_FUNCTION_TBL.FUNCTION_URL,
+        SYS_FUNCTION_TBL.STATUS,
+        SYS_FUNCTION_TBL.CREATE_TIME,
+        SYS_FUNCTION_TBL.UPDATE_TIME,
+        SYS_FUNCTION_TBL.FUNCTION_APPLY_SCOPE_ID,
+        SYS_FUNCTION_TBL.LEVEL
+    </sql>
+
+    <sql id="SYS_FUNCTION_TBL_properties">
+        #{functionId},
+        #{parentFunctionId},
+        #{functionName},
+        #{functionTypeId},
+        #{functionUrl},
+        #{status},
+        #{createTime},
+        #{updateTime},
+        #{functionApplyScopeId},
+        #{level}
+    </sql>
+
+    <insert id="createFunction" parameterType="Function" useGeneratedKeys="true" keyColumn="function_Id" keyProperty="functionId">
+        INSERT INTO SYS_FUNCTION_TBL (<include refid="SYS_FUNCTION_TBL_columns"/>) VALUES (<include
+            refid="SYS_FUNCTION_TBL_properties"/>)
+    </insert>
+
+    <delete id="deleteFunctionById" parameterType="int">
+        DELETE FROM SYS_FUNCTION_TBL
+        WHERE
+        FUNCTION_ID = #{value}
+    </delete>
+	<!--  批量删除 -->
+ 	<delete id="deleteFunctionByIdBatch" parameterType="list">
+        DELETE FROM SYS_FUNCTION_TBL
+        WHERE
+        FUNCTION_ID in <foreach collection="list" item="item" open="(" close=")" separator=",">
+        	#{item}
+        </foreach>
+    </delete>
+    
+    <update id="updateFunction" parameterType="Function">
+        UPDATE SYS_FUNCTION_TBL SET
+        FUNCTION_ID = #{functionId},
+        PARENT_FUNCTION_ID = #{parentFunctionId},
+        FUNCTION_NAME = #{functionName},
+        FUNCTION_TYPE_ID = #{functionTypeId},
+        FUNCTION_URL = #{functionUrl},
+        STATUS = #{status},
+        CREATE_TIME = #{createTime},
+        UPDATE_TIME = #{updateTime},
+        FUNCTION_APPLY_SCOPE_ID = #{functionApplyScopeId},
+        LEVEL = #{level}
+        WHERE
+        FUNCTION_ID = #{functionId}
+    </update>
+
+    <select id="getFunctionById" resultMap="FunctionResult" parameterType="int">
+        SELECT
+        <include refid="SYS_FUNCTION_TBL_columns"/>
+        FROM SYS_FUNCTION_TBL
+        WHERE
+        FUNCTION_ID = #{value}
+    </select>
+
+    <select id="getFunctionList" resultMap="FunctionResult" parameterType="QueryFunctionCondition">
+        SELECT
+        <include refid="SYS_FUNCTION_TBL_columns"/>
+        FROM SYS_FUNCTION_TBL
+        <where>
+        <if test="functionApplyScopeId !=null and functionApplyScopeId !=0  ">
+                SYS_FUNCTION_TBL.FUNCTION_APPLY_SCOPE_ID = #{functionApplyScopeId}
+        </if>
+        <if test="functionTypeId!=null and functionTypeId !=0 ">
+              and  SYS_FUNCTION_TBL.FUNCTION_TYPE_ID = #{functionTypeId}
+        </if>
+        <if test="parentFunctionId!= null and parentFunctionId!=0 ">
+              and  SYS_FUNCTION_TBL.PARENT_FUNCTION_ID = #{parentFunctionId}
+        </if>
+        </where> 
+        ORDER BY FUNCTION_ID
+    </select>
+
+    <select id="getFunctionListByRoleId" resultMap="FunctionResult" parameterType="int">
+        SELECT
+        <include refid="SYS_FUNCTION_TBL_columns"/>
+        FROM SYS_FUNCTION_TBL,SYS_ROLE_FUNCTION_TBL
+        WHERE SYS_FUNCTION_TBL.FUNCTION_ID = SYS_ROLE_FUNCTION_TBL.FUNCTION_ID
+        AND SYS_ROLE_FUNCTION_TBL.ROLE_ID = #{value}
+        ORDER BY FUNCTION_ID
+    </select>
+
+    <select id="getFunctionListByParentId" resultMap="FunctionResult" parameterType="int">
+        SELECT
+        <include refid="SYS_FUNCTION_TBL_columns"/>
+        FROM SYS_FUNCTION_TBL
+        WHERE SYS_FUNCTION_TBL.PARENT_FUNCTION_ID = #{value}
+        ORDER BY FUNCTION_ID
+    </select>
+    <!-- 根据多个ParentId查询 -->
+    <select id="getFunctionListByParentIdSet" resultMap="FunctionResult" parameterType="list">
+        SELECT
+        <include refid="SYS_FUNCTION_TBL_columns"/>
+        FROM SYS_FUNCTION_TBL
+        WHERE SYS_FUNCTION_TBL.PARENT_FUNCTION_ID in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+        #{item}
+        </foreach>
+        
+        ORDER BY FUNCTION_ID
+    </select>
+    
+    <select id="getFirFunction" resultMap="FunctionResult" parameterType="QueryFunctionCondition">
+        SELECT
+        <include refid="SYS_FUNCTION_TBL_columns"/>
+        FROM SYS_FUNCTION_TBL
+        WHERE SYS_FUNCTION_TBL.LEVEL = 1
+        ORDER BY FUNCTION_ID
+    </select>
+    
+    <select id="getChildFunctionById" resultMap="FunctionResult" parameterType="int">
+        SELECT
+        <include refid="SYS_FUNCTION_TBL_columns"/>
+        FROM SYS_FUNCTION_TBL
+        WHERE SYS_FUNCTION_TBL.PARENT_FUNCTION_ID = #{value}
+        ORDER BY FUNCTION_ID
+    </select>
+    
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RoleFunctionMapper" >
+    
+    <resultMap id="RoleFunctionResult" type="RoleFunction">
+        <result property="roleId" column="ROLE_ID" />
+        <result property="functionId" column="FUNCTION_ID" />
+        <result property="status" column="STATUS" />
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <sql id="SYS_ROLE_FUNCTION_TBL_columns">
+        ROLE_ID,
+        FUNCTION_ID,
+        STATUS,
+        CREATE_TIME,
+        UPDATE_TIME
+    </sql>
+
+    <sql id="SYS_ROLE_FUNCTION_TBL_properties">
+        #{roleId},
+        #{functionId},
+        #{status},
+        #{createTime},
+        #{updateTime}
+    </sql>
+
+    <insert id="createRoleFunction" parameterType="RoleFunction">
+        INSERT INTO SYS_ROLE_FUNCTION_TBL (<include refid="SYS_ROLE_FUNCTION_TBL_columns"/>) VALUES (
+        <include refid="SYS_ROLE_FUNCTION_TBL_properties"/>)
+    </insert>
+    
+    <insert id="createRoleFunctionBatch" parameterType="list">
+        INSERT INTO SYS_ROLE_FUNCTION_TBL (<include refid="SYS_ROLE_FUNCTION_TBL_columns"/>) VALUES 
+        <foreach collection="list" item="item" separator=",">
+	        (#{item.roleId},
+	        #{item.functionId},
+	        #{item.status},
+	        #{item.createTime},
+	        #{item.updateTime})
+         </foreach>
+    </insert>
+    
+
+    <delete id="deleteRoleFunctionById" parameterType="java.util.Map">
+        DELETE FROM SYS_ROLE_FUNCTION_TBL
+        WHERE
+        ROLE_ID = #{roleId}
+        AND FUNCTION_ID = #{functionId}
+    </delete>
+
+    <delete id="deleteRoleFunctionByRoleId" parameterType="int">
+        DELETE FROM SYS_ROLE_FUNCTION_TBL
+        WHERE
+        ROLE_ID = #{roleId}
+    </delete>
+
+    <delete id="deleteRoleFunctionByFunctionId" parameterType="int">
+        DELETE FROM SYS_ROLE_FUNCTION_TBL
+        WHERE
+        FUNCTION_ID = #{value}
+    </delete>
+    
+	<!-- 批量删除 -->
+ 	<delete id="deleteRoleFunctionByFunctionIdBatch" parameterType="list">
+        DELETE FROM SYS_ROLE_FUNCTION_TBL
+        WHERE
+        FUNCTION_ID in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+        #{item}
+        </foreach> 
+    </delete>
+
+    <update id="updateRoleFunction" parameterType="RoleFunction">
+        UPDATE SYS_ROLE_FUNCTION_TBL SET
+        ROLE_ID = #{roleId},
+        FUNCTION_ID = #{functionId},
+        STATUS = #{status},
+        CREATE_TIME = #{createTime},
+        UPDATE_TIME = #{updateTime}
+        WHERE
+        ROLE_ID = #{roleId#
+        AND FUNCTION_ID = #{functionId}
+    </update>
+
+    <select id="getRoleFunctionById" resultMap="RoleFunctionResult" parameterType="java.util.Map">
+        SELECT
+        <include refid="SYS_ROLE_FUNCTION_TBL_columns"/>
+        FROM SYS_ROLE_FUNCTION_TBL
+        WHERE
+        ROLE_ID = #{roleId}
+        AND FUNCTION_ID = #{functionId}
+    </select>
+
+    <select id="getRoleFunctionList" resultMap="RoleFunctionResult"
+            parameterType="QueryRoleFunctionCondition">
+        SELECT
+        <include refid="SYS_ROLE_FUNCTION_TBL_columns"/>
+        FROM SYS_ROLE_FUNCTION_TBL
+    </select>
+    <!--end-->
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GroupMapper" >
+        
+        <resultMap id="GroupResult" type="Group">
+            <result property="groupId" column="GROUP_ID"  />
+            <result property="parentGroupId" column="PARENT_GROUP_ID" />
+            <result property="groupName" column="GROUP_NAME"/>
+            <result property="status" column="STATUS" />
+            <result property="createTime" column="CREATE_TIME"/>
+            <result property="updateTime" column="UPDATE_TIME"/>
+            <result property="level" column="LEVEL"/>
+            <!-- 
+            <result property="groupList" column="GROUP_ID" select="getChildGroupById"/>
+             -->
+        </resultMap>
+
+        <sql id="SYS_GROUP_TBL_columns">
+            GROUP_ID,
+            PARENT_GROUP_ID,
+            GROUP_NAME,
+            STATUS,
+            CREATE_TIME,
+            UPDATE_TIME,
+            LEVEL
+        </sql>
+
+        <sql id="SYS_GROUP_TBL_properties">
+            #{groupId},
+            #{parentGroupId},
+            #{groupName},
+            #{status},
+            #{createTime},
+            #{updateTime},
+            #{level}
+        </sql>
+
+        <insert id="addGroup" parameterType="Group" useGeneratedKeys="true" keyColumn="group_id" keyProperty="groupId">
+            INSERT INTO SYS_GROUP_TBL (<include refid="SYS_GROUP_TBL_columns"/>) VALUES (<include refid="SYS_GROUP_TBL_properties"/>)
+        </insert>
+
+        <delete id="deleteGroupById" parameterType="int">
+            DELETE FROM SYS_GROUP_TBL
+            WHERE
+                GROUP_ID = #{value}
+
+        </delete>
+
+        <update id="updateGroup" parameterType="Group">
+            UPDATE SYS_GROUP_TBL SET
+                PARENT_GROUP_ID = #{parentGroupId},
+                GROUP_NAME = #{groupName},
+                STATUS = #{status},
+                CREATE_TIME = #{createTime},
+                UPDATE_TIME = #{updateTime},
+                LEVEL = #{level}
+            WHERE
+                GROUP_ID = #{groupId}
+
+        </update>
+
+        <select id="getGroupById" resultMap="GroupResult" parameterType="int">
+            SELECT
+            <include refid="SYS_GROUP_TBL_columns"/>
+            FROM SYS_GROUP_TBL
+            WHERE
+                GROUP_ID = #{value}
+
+
+        </select>
+
+        <select id="getGroupList" resultMap="GroupResult" parameterType="QueryGroupCondition">
+            SELECT
+            <include refid="SYS_GROUP_TBL_columns"/>
+            FROM SYS_GROUP_TBL WHERE  SYS_GROUP_TBL.STATUS = 0
+        </select>
+        
+        
+         <select id="getGroupByLevel" resultMap="GroupResult" parameterType="int">
+            SELECT
+            <include refid="SYS_GROUP_TBL_columns"/>
+            FROM SYS_GROUP_TBL WHERE  level=#{value} and SYS_GROUP_TBL.STATUS = 0
+        </select>
+        
+        
+        <select id="getGroupListForTechTree" resultMap="GroupResult" parameterType="QueryGroupCondition">
+            SELECT
+            <include refid="SYS_GROUP_TBL_columns"/>
+            FROM SYS_GROUP_TBL
+            WHERE SYS_GROUP_TBL.PARENT_GROUP_ID IS NOT NUll
+                  AND SYS_GROUP_TBL.STATUS = 0;
+        </select>
+        
+        <select id="getFirGroup" resultMap="GroupResult" parameterType="QueryGroupCondition">
+            SELECT
+            <include refid="SYS_GROUP_TBL_columns"/>
+            FROM SYS_GROUP_TBL
+            WHERE SYS_GROUP_TBL.PARENT_GROUP_ID = -1
+            AND SYS_GROUP_TBL.STATUS = 0
+                 <if test="thirdGroupId !=null and thirdGroupId !='0' ">
+                       AND SYS_GROUP_TBL.GROUP_ID =
+                              (SELECT G1.PARENT_GROUP_ID
+                                 FROM SYS_GROUP_TBL G1
+                                WHERE G1.GROUP_ID = (SELECT G2.PARENT_GROUP_ID
+                                                       FROM SYS_GROUP_TBL G2
+                                                      WHERE G2.GROUP_ID = #{thirdGroupId}))
+	       		 </if>
+        </select>
+        
+         <select id="getChildGroupById" resultMap="GroupResult" parameterType="int">
+            SELECT
+            <include refid="SYS_GROUP_TBL_columns"/>
+            FROM SYS_GROUP_TBL
+            WHERE
+                PARENT_GROUP_ID = #{value}
+                  AND SYS_GROUP_TBL.STATUS = 0;
+        </select>
+        <!--end-->
+</mapper>

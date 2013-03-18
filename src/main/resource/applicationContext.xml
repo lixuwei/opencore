@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<!-- 配置文件加载 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+			
+			
+				
+				<value>classpath:/jdbc-mysql-me.properties</value>
+				
+				<!--
+				<value>classpath:/jdbc-mysql-crm.properties</value>
+				<value>classpath:/jdbc-mysql-me.properties</value>
+				<value>classpath:/jdbc-mysql-crm-me.properties</value>
+				-->
+				
+				 
+				
+			</list>
+		</property>
+	</bean>
+	<!-- 引入Crm库的配置文件 -->
+	
+	<!-- 
+	<import resource="applicationContext-crm-read.xml" />
+	 -->
+	 
+	<!-- 动态数据源的父类,其中配置的参数为子数据库的default值 -->
+	<bean id="parentDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" abstract="true">
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${jdbc.maxPoolSize}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${jdbc.minPoolSize}</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>${jdbc.initialPoolSize}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>${jdbc.idleConnectionTestPeriod}
+			</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>${jdbc.maxIdleTime}</value>
+		</property>
+	</bean>
+
+	<!-- 子数据源,写操作主库,无需修改配置参数 -->
+	<bean id="write" parent="parentDataSource"></bean>
+
+	<!-- 子数据源,只读数据源热read02,只需对url,user,password重新赋值 -->
+	<bean id="read02" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db02.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db02.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db02.password}</value>
+		</property>
+	</bean>
+
+
+
+	<!-- 子数据源,只读数据源热read03,只需对url,user,password重新赋值 -->
+	<!-- 
+	<bean id="read03" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db03.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db03.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db03.password}</value>
+		</property>
+	</bean>
+
+	
+	<bean id="read04" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db04.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db04.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db04.password}</value>
+		</property>
+	</bean>
+
+	<bean id="read05" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db05.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db05.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db05.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="read06" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db06.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db06.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db06.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="read07" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db07.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db07.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db07.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="read08" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db08.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db08.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db08.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="read09" destroy-method="close" parent="parentDataSource">
+		<property name="jdbcUrl">
+			<value>${jdbc.read.db09.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.read.db09.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.read.db09.password}</value>
+		</property>
+	</bean>
+	 -->
+	<!-- 动态数据源 -->
+	<bean id="dataSource" class="com.fairyhawk.common.db.DataSourceRouter">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="write" value-ref="write" />
+				<entry key="read02" value-ref="read02" />
+				<!--
+				<entry key="read03" value-ref="read03" />
+				<entry key="read04" value-ref="read04" />
+				<entry key="read05" value-ref="read05" />
+				<entry key="read06" value-ref="read06" />
+				<entry key="read07" value-ref="read07" />
+				<entry key="read08" value-ref="read08" />
+				<entry key="read09" value-ref="read09" />
+				-->
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="write" />
+		<property name="dataSourceKey">
+			<ref local="dataSourceKey" />
+		</property>
+	</bean>
+
+	<!-- 读写管理 -->
+	<bean id="dataSourceKey" class="com.fairyhawk.common.db.DataSourceKeyImpl">
+		<property name="readDateSourceMap">
+			<map key-type="java.lang.String">
+				<entry key="read02" value="read02" />
+				<!--
+				<entry key="read03" value="read03" />
+				<entry key="read04" value="read04" />
+				<entry key="read05" value="read05" />
+				<entry key="read06" value="read06" />
+				<entry key="read07" value="read07" />
+				<entry key="read08" value="read08" />
+				<entry key="read09" value="read09" />
+				-->
+			</map>
+		</property>
+		<property name="writeKey">
+			<value>write</value>
+		</property>
+	</bean>
+	<!-- 事务配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 事务管理拦截器 -->
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<!-- 读操作 -->
+				<prop key="query*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="find*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="get*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="load*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="count*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="list*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="check*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="query*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<prop key="qry*">PROPAGATION_SUPPORTS,-Exception</prop>
+				<!-- 写操作 -->
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="del*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="upd*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="creat*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="edit*">PROPAGATION_REQUIRED,-Exception</prop>
+				
+				<prop key="*">PROPAGATION_SUPPORTS,-Exception</prop>
+
+			</props>
+		</property>
+	</bean>
+
+	<!--交易模块业务层事务拦截器：注解性事务(方法命名避开通用拦截器) add by wh.cheng-->
+	<bean id="trx.transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributeSource">
+			<bean
+				class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+		</property>
+	</bean>
+
+
+	<!-- 动态数据源拦截器 -->
+	<bean id="dataSourceInterceptor" class="com.fairyhawk.common.db.DataSourceInterceptor">
+		<property name="attributes">
+			<props>
+				<!-- 读操作 -->
+				<prop key="query*">read</prop>
+				<prop key="find*">read</prop>
+				<prop key="get*">read</prop>
+				<prop key="load*">read</prop>
+				<prop key="count*">read</prop>
+				<prop key="list*">read</prop>
+				<prop key="check*">read</prop>
+				<prop key="query*">read</prop>
+				<prop key="qry*">read</prop>
+				<!-- 写操作 -->
+				<prop key="save*">write</prop>
+				<prop key="upd*">write</prop>
+				<prop key="del*">write</prop>
+				<prop key="add*">write</prop>
+				<prop key="insert*">write</prop>
+				<prop key="creat*">write</prop>
+				<prop key="edit*">write</prop>
+				
+				<prop key="*">read</prop>
+			</props>
+		</property>
+		<property name="dataSourceKey">
+			<ref bean="dataSourceKey" />
+		</property>
+	</bean>
+
+	<!-- 根据Name匹配拦截器 -->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<!-- 指定获取数据源的Interceptor -->
+				<value>dataSourceInterceptor</value>
+				<!-- 事务管理的Interceptor -->
+				<value>transactionInterceptor</value>
+				
+				<!-- 其他库的事务管理 -->
+				<!--
+				<value>transactionInterceptor_crm_read_online</value>
+				-->
+			</list>
+		</property>
+	</bean>
+	
+   <!-- 本项目数据dao -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	 <property name="configLocation"  value="classpath:SqlMapConfig.xml"/>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="myBatisDao" class="com.fairyhawk.common.dao.MyBatisDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	
+	
+    <!-- 加载其他文件 -->
+    <import resource="classpath*:/config/spring/spring-common.xml"/>
+    
+   	<import resource="classpath*:/config/spring/spring-customer.xml"/>
+    <import resource="classpath*:/config/spring/spring-user.xml"/>
+    
+    <import resource="classpath*:/config/spring/spring-customerApply.xml"/>
+    
+     <import resource="classpath*:/config/spring/spring_activemq.xml"/>
+	</beans>
